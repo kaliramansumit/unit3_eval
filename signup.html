@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #swi{
+            font-size: xx-large;
+            font-family: sans-serif;
+            font-weight: 700;
+            margin-left: 40px;
+            color: darkred;
+            text-decoration: none;
+            margin-top: 13px;
+        }
+        #navbar{
+            display: flex;
+            width: 1880px;
+            height: 80px;
+            border: 2px solid black;
+            background-color: darkgoldenrod;
+          
+        }
+        #login{
+          margin-left: 1000px;
+          margin-top: 25px;
+          font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        #signup{
+            margin-left: 150px;
+            margin-top: 25px;
+            font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        #menu{
+            margin-left: 150px;
+            margin-top: 25px;
+            font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        h1{
+            margin-left: 40px;
+            font-family: sans-serif;
+            font-weight: 600;
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: white;
+        }
+        #form{
+            position: absolute;
+            top: 100px;
+            width:auto;
+        }
+
+        #form input, #form label{
+            color: black;
+            font-weight: 600px;
+            padding: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <a href="menu.html" id="swi">Zomato</a>
+        <a href="login.html" id="login">Login</a>
+        <a href="signup.html" id="signup">Signup</a>
+        <a href="menu.html" id="menu">Menu</a>
+    </div>
+
+    <form action="" id="form" onsubmit="signup(event)">
+        <label for="">Name</label>
+        <input type="text" id="name"/>
+        <label for="">Email</label>
+        <input type="text" id="email"/>
+        <label for="">User Name</label>
+        <input type="text" id="username"/>
+        <label for="">Password</label>
+        <input type="password" id="password"/>
+        <label for="">Mobile Number</label>
+        <input type="number" id="mobile"/>
+        <input type="Submit"/>
+    </form>
+
+</body>
+</html>
+
+<script>
+    let myform = document.getElementById("form");
+    function signup(e) {
+        e.preventDefault();
+
+        let userData = {
+           name: form.name.value,
+           email: form.email.value,
+           password: form.password.value,
+           username: form.username.value   ,
+           mobile: form.mobile.value,          
+        };
+        let data = JSON.stringify(userData);
+        console.log("data:", data);
+
+        fetch("https://masai-api-mocker.herokuapp.com/auth/register", {
+            method: "POST",
+            body: data,
+            headers : {
+                "Content-Type" : "application/json",
+            },
+        })
+          .then((res) => {
+              return res.json();
+          })
+          .then((r) => {
+              console.log(r);
+          })
+          .catch((err) => {
+              console.log(err);
+          });
+    }
+</script>
