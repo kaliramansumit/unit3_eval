@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #navbar{
+            display: flex;
+            width: 1880px;
+            height: 80px;
+            border: 2px solid black;
+            background-color: darkgoldenrod;
+        }
+        #menu{
+          margin-left: 1000px;
+          margin-top: 25px;
+          font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        #login{
+            margin-left: 150px;
+            margin-top: 25px;
+            font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        #signup{
+            margin-left: 150px;
+            margin-top: 25px;
+            font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        h1{
+            margin-left: 40px;
+            font-family: sans-serif;
+            font-weight: 600;
+        }
+        #form{
+            position: absolute;
+            top: 100px;
+            width:auto;
+        }
+
+        #form input, #form label{
+            color: black;
+            font-weight: 600px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <h1>Zomato</h1>
+
+        <a href="menu.html" id="menu">Menu</a>
+        <a href="login.html" id="login">Login</a>
+        <a href="signup.html" id="signup">Signup</a>
+        
+    </div>
+
+    <form action="" id="form" onsubmit="login(event)">
+        <h1>Login</h1>
+        <label for="">User Name</label>
+        <input type="text" id="username">
+        <label for="">User Password</label>
+        <input type="password" id="password">
+        <input type="Submit">
+    </form>
+
+</body>
+</html>
+<script>
+
+let myform =document.getElementById("form");
+function login(e) {
+  e.preventDefault();
+
+let userData = {
+    username: form.username.value,
+    password: form.password.value,
+};
+
+let data = JSON.stringify(userData);
+console.log("data:", data);
+
+fetch ("https://masai-api-mocker.herokuapp.com/auth/login",{
+    method:"POST",
+    body: data,
+    headers: {
+        "Content-Type": "application/json",
+    },
+})
+.then(function(res) {
+    return res.json();
+})
+.then(function(r){
+    alert("Logged in successfully");
+    window.location.href = "/menu.html";
+})
+.catch(function(err) {
+    console.log(err);
+});
+}
+</script>
+

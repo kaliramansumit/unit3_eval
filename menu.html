@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #navbar{
+            display: flex;
+            width: 1880px;
+            height: 80px;
+            border: 2px solid black;
+            background-color: darkgoldenrod;
+        }
+        #login{
+          margin-left: 1000px;
+          margin-top: 25px;
+          font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        #signup{
+            margin-left: 150px;
+            margin-top: 25px;
+            font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        #menu{
+            margin-left: 150px;
+            margin-top: 25px;
+            font-family: sans-serif;
+          font-weight: 400;
+          font-size: x-large;
+        }
+        h1{
+            margin-left: 40px;
+            font-family: sans-serif;
+            font-weight: 600;
+        }
+        #food{
+            position: absolute;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+
+        }
+        #food .main .div2 p, #food .main h1, #food .cartbtn{
+            color: rgb(14, 11, 11);
+            padding: 5px;
+        }
+        .cartbtn{
+            font-size: x-large;
+            font-family: sans-serif;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <h1 onclick="mainMenu()">Zomato</h1>
+        <a href="login.html" id="login">Login</a>
+        <a href="signup.html" id="signup">Signup</a>
+        <a href="menu.html" id="menu">Menu</a>
+        <a href="cart.html">Cart</a>
+    </div>
+    <div id="food">
+
+    </div>
+
+</body>
+</html>
+
+<script>
+
+let food_items = document.getElementById("food");
+let i = 0;
+async function data() {
+    let response = await fetch("https://www.themealdb.com/api/json/v1/1/categories.php");
+
+    let data = await response.json();
+    console.log(data.categories);
+    displayitems(data.categories);
+}
+
+data();
+
+function displayitems(result) {
+    result.forEach(element => {
+        let container = document.createElement("div");
+        container.className = "main";
+
+
+        let div1 = document.createElement("div");
+        div1.className = "div1";
+
+        let img = document.createElement("img");
+        img.src = element.strCategoryThumb;
+
+        div1.append(img);
+
+        let div2 = document.createElement("div");
+        div2.className = "div2";
+
+        let name = document.createElement("h1");
+        name.innerHTML = element.strCategory;
+
+        let p = document.createElement("h2");
+        p.innerText = "Rs." + element.idCategory + "00";
+
+        let description = document.createElement("p");
+        description.innerHTML = element.strCategoryDescription;
+
+        div2.append(name,p,description);
+
+
+        let cart = document.createElement("button");
+        cart.innerHTML = "Add to Cart";
+        cart.className = "cartbtn";
+
+        cart.onclick = function() {
+            addtocart(element);
+        };
+
+
+        container.append(div1,div2,cart);
+        food_items.append(container);
+
+    });
+}
+
+
+function addtocart(products) {
+    if(localStorage.getItem("cart") === null) {
+        localStorage.setItem("cart",JSON.stringify([]));
+    }
+  let data = JSON.parse(localStorage.getItem("cart"));
+  data.push(products);
+
+  localStorage.setItem("cart", JSON.stringify(data));
+    
+}
+
+
+function mainMenu() {
+    window.location.href = "index.html"
+}
+
+</script>
